@@ -1,6 +1,6 @@
 import { JSONSchema4, JSONSchema4Type, JSONSchema6, JSONSchema6Type } from 'json-schema';
 
-export = $RefParser
+export default $RefParser;
 
 /**
  * This is the default export of JSON Schema $Ref Parser. You can creates instances of this class using new $RefParser(), or you can just call its static methods.

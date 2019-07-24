@@ -6,6 +6,58 @@ Because I do not need to resolve URLs for my current usages, I'm just removing t
 
 I'm publishing it locally using [Verdaccio](https://verdaccio.org/) so as to not confuse anyone looking for the **[real version](https://github.com/APIDevTools/json-schema-ref-parser)**
 
+## USAGE
+
+### 1. Publish this library locally
+ 1. Clone this repository
+ 2. Modify `package.json` to set the library name and version as desired.
+ 3. Make sure [Verdaccio](https://verdaccio.org/) is configured and running. (So you don't publish this to the real NPM.)
+ 4. Publish this hacky package: 
+    ```
+      cd json-schema-ref-parser
+      npm publish
+    ```
+### 2. Configure your Angular app
+Inside your angular app:
+ 1. Install this package using whatever name you published it with.
+ 2. *Modify `index.html` by adding the following to the `<head>` section:
+     ```html
+       <script>
+         var global = global || window;
+       </script>
+     ```
+ 3. *Modify `polyfills.ts` by adding the following:
+      ```typescript
+      global.Buffer = global.Buffer || require('buffer').Buffer;
+      ```
+ 4. Import it using:
+      ```typescript
+      import $RefParser from "json-schema-ref-parser";
+      ```
+ 5. Code on! Refer to the real repository for more details on how to use the library.
+ 
+# Summary of Changes
+All changes are hacky. This fork is designed to work for my purposes with minimal effor. Do not expect this to be a good
+solution! This is a **bad** solution.
+
+
+### Changes to make it work in the browser:
+It seems like this library was designed to be run on the back-end, not in the browser. I'm not familiar enough with Node
+to know if these changes are OK or not.
+  1. Added `process` to the package dependencies.
+  1. Added `const process = require('process')` to the files that use it
+
+### Changes to make it work with newer versions of Angular:
+  1. Removed the imports of `http` and `https` from `lib/resolvers/http.js`
+  1. Commented out the code that performs an HTTP GET and replaced it with a hardcoded promise that immediately rejects
+     with an error message indicating the feature was removed for Angular support.
+  1. Changed the syntax of the export in `index.d.ts` to avoid the need for `import * as` 
+
+  
+ 
+
+
+
 JSON Schema $Ref Parser
 ============================
 #### Parse, Resolve, and Dereference JSON Schema $ref pointers
