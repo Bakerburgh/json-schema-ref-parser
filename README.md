@@ -1,3 +1,11 @@
+# A MODIFIED VERSION OF [json-schema-ref-parser](https://github.com/APIDevTools/json-schema-ref-parser).
+
+The modifications are to address the incompatability of this library with Angular versions > 6. See [this issue](https://github.com/APIDevTools/json-schema-ref-parser/issues/129) over in the real repository.
+
+Because I do not need to resolve URLs for my current usages, I'm just removing the HTTP(s) resolver. This "fix" works for me, but SHOULD NOT BE CONSIDERED A REAL FIX!
+
+I'm publishing it locally using [Verdaccio](https://verdaccio.org/) so as to not confuse anyone looking for the **[real version](https://github.com/APIDevTools/json-schema-ref-parser)**
+
 JSON Schema $Ref Parser
 ============================
 #### Parse, Resolve, and Dereference JSON Schema $ref pointers
