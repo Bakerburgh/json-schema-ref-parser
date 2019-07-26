@@ -34,7 +34,36 @@ Inside your angular app:
       ```typescript
       import $RefParser from "json-schema-ref-parser";
       ```
- 5. Code on! Refer to the real repository for more details on how to use the library.
+ 5. Parse your file using something else, such as [`js-yaml`](https://github.com/nodeca/js-yaml)
+ 5. Use `$RefParser.dereference()`
+ 
+### 3. Example Usage
+```typescript
+        const raw = {
+            foo: 1,
+            bar: 'test',
+            deref: {
+                $ref: '#/foo'
+            }
+        };
+
+        const asString = JSON.stringify(raw);
+        const parsed = yaml.safeLoad(asString);
+        // DO NOT USE THE FOLLOWING:
+        //  -- It would trigger the resolvers that were removed.
+        // $RefParser.parse(asString, {resolve: {external: true}}, (err, schema) => {
+        //     console.log(err, schema);
+        //     done();
+        // });
+
+        $RefParser.dereference(parsed, (err, schema) => {
+            console.log(err, schema);
+        });
+``` 
+The above example outputs the following:
+```
+null, Object{foo: 1, bar: 'test', deref: 1}
+ ```
  
 # Summary of Changes
 All changes are hacky. This fork is designed to work for my purposes with minimal effor. Do not expect this to be a good
